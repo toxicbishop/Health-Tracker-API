@@ -49,8 +49,9 @@ class GoogleSheetsService {
 
       await this.sheets.spreadsheets.values.append({
         spreadsheetId: this.spreadsheetId,
-        range: "Sheet1!A:G", // Adjust "Sheet1" to your actual sheet name
+        range: "Sheet1!A:F", // Adjusted for 6 columns now
         valueInputOption: "USER_ENTERED",
+        insertDataOption: "INSERT_ROWS",
         requestBody: {
           values: [values],
         },
@@ -65,27 +66,27 @@ class GoogleSheetsService {
 
   private mapLogToRow(log: HealthLog): any[] {
     const { timestamp, userId, type, notes = "" } = log;
-    let val1: string | number = "";
-    let val2: string | number = "";
+    let value: string | number = "";
     let unit: string = "";
 
     switch (log.type) {
       case ParameterType.WEIGHT:
-        val1 = log.weight;
+        value = log.weight;
         unit = log.unit;
         break;
       case ParameterType.BLOOD_PRESSURE:
-        val1 = log.systolic;
-        val2 = log.diastolic;
+        value = `${log.systolic}/${log.diastolic}`;
         unit = "mmHg";
         break;
       case ParameterType.HEART_RATE:
-        val1 = log.bpm;
+        value = log.bpm;
         unit = "bpm";
         break;
     }
 
-    return [timestamp, userId, type, val1, val2, unit, notes];
+    // Return a clean 6-column layout:
+    // Timestamp | UserID | Type | Value | Unit | Notes
+    return [timestamp, userId, type, value, unit, notes];
   }
 }
 
