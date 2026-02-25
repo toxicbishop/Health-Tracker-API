@@ -1,7 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { HealthLog } from "../types/health";
 import { validate } from "../middleware/validate";
-import { HealthLogSchema } from "../validations/healthValidation";
+import {
+  HealthLogSchema,
+  HealthQuerySchema,
+} from "../validations/healthValidation";
 
 import { googleSheetsService } from "../services/googleSheetsService";
 
@@ -48,22 +51,27 @@ router.post(
  * @desc    Retrieve all health log entries for the logged-in user
  * @access  Private
  */
-router.get("/", authenticateJWT, async (req: Request, res: Response) => {
-  try {
-    const userId = req.userId as string;
-    const { type } = req.query;
+router.get(
+  "/",
+  authenticateJWT,
+  validate(HealthQuerySchema as any, "query"),
+  async (req: Request, res: Response) => {
+    try {
+      const userId = req.userId as string;
+      const { type } = req.query;
 
-    let filteredLogs = await googleSheetsService.getLogs(userId);
+      let filteredLogs = await googleSheetsService.getLogs(userId);
 
-    if (type) {
-      filteredLogs = filteredLogs.filter((log) => log.type === type);
+      if (type) {
+        filteredLogs = filteredLogs.filter((log) => log.type === type);
+      }
+
+      res.json(filteredLogs);
+    } catch (error) {
+      console.error("[API Error]:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-
-    res.json(filteredLogs);
-  } catch (error) {
-    console.error("[API Error]:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+  },
+);
 
 export default router;
