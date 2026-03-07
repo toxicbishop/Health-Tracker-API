@@ -6,6 +6,13 @@ A Back-end API wellness tracking application featuring a Node/Express backend th
 
 ## 🚀 Project Phases Completed
 
+## Architecture Diagram
+
+The backend system relies on Express.js endpoints to manage health logs efficiently, passing through a Google Sheets integration.
+You can view or edit the architecture visually:
+
+- [Backend Architecture Diagram (`backend_architecture.drawio`)](./backend_architecture.drawio) _(Open this file with the [Draw.io Extension](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio) in VS Code or via [app.diagrams.net](https://app.diagrams.net/))_
+
 ### Phase 1: Project Skeleton
 
 - Initialized a Node.js project.
@@ -42,5 +49,6 @@ A Back-end API wellness tracking application featuring a Node/Express backend th
 - Triggered sample JSON payloads verifying the entire stack: Request → Validation → Storage (Google Sheets) → `201 Created` Response.
 
 ### Usage of This API
+
 - Use POSTMAN 📮 to interact with this API.
 - This is Strictly an backend API.
