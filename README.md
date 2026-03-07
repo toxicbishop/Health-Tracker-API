@@ -2,8 +2,6 @@
 
 A Back-end API wellness tracking application featuring a Node/Express backend that saves structured health data directly to Google Sheets.
 
----
-
 ## Architecture Diagram
 
 The backend system relies on Express.js endpoints to manage health logs efficiently, passing through a Google Sheets integration.
