@@ -52,3 +52,7 @@ _(Note: GitHub doesn't render raw `.drawio` files as images. To edit this diagra
 
 - Use POSTMAN 📮 to interact with this API.
 - This is Strictly an backend API.
+
+## License
+
+This project is licensed under the [MIT LICENSE](LICENSE).
